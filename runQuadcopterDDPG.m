@@ -14,6 +14,9 @@ actInfo.UpperLimit = 1;
 % x, x_dot, y, ... phi, phi_dot, theta,...
 obsInfo = rlNumericSpec([12 1]);
 obsInfo.Name = 'plant_states';
+obsInfo.LowerLimit = -10^6;
+obsInfo.UpperLimit = 10^6;
+
 
 % Initialize state
 State = zeros(12,1);
