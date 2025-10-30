@@ -35,13 +35,13 @@ IsDone = any([abs(next_z) abs(next_x) abs(next_y)] > 1000)...
 
 if ~IsDone
     % Currently set as simple reward function  for testing
-    Reward = -0.001*(next_phid^2 + next_thetad^2 + next_psid^2) - 0.001*(next_zd^2) + 10;
+    Reward = -0.0001*(next_phid^2 + next_thetad^2 + next_psid^2) - 0.01*(next_zd^2) + 100;
     % Small positive reward is given at each time step to avoid getting
     % stuck in local maxima where agent tries to crash as soon as possible
     % to terminate episode early and avoid accumulating more negative
     % rewards
 else
-    Reward = -1*10; 
+    Reward = -2*10^2; 
     % When IsDone is true, a large negative reward is given for "crashing"
 end
 
