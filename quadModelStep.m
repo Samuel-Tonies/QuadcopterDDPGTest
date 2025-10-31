@@ -8,7 +8,7 @@ m=0.65;
 ix=7.5e-3;
 iy=7.5e-3;
 iz=1.3e-2;
-Ts = 0.1; % note that Ts should be same as Ts in runQuadcopterDDPG
+Ts = 0.01; % note that Ts should be same as Ts in runQuadcopterDDPG
 
 % Unpack State
 x = State(1);
@@ -30,9 +30,13 @@ w_scale = max_w;
 
 % Unpack Action
 w1 = Action(1)*w_scale;
-w2 = Action(2)*w_scale;
-w3 = Action(3)*w_scale;
-w4 = Action(4)*w_scale;
+w2 = Action(1)*w_scale;
+w3 = Action(1)*w_scale;
+w4 = Action(1)*w_scale;
+
+% w2 = Action(2)*w_scale;
+% w3 = Action(3)*w_scale;
+% w4 = Action(4)*w_scale;
 
 % Ensure input bounded
 w1 = max(min(w1,max_w),0);
