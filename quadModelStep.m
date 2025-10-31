@@ -30,9 +30,9 @@ w_scale = max_w;
 
 % Unpack Action
 w1 = Action(1)*w_scale;
-w2 = Action(1)*w_scale;
-w3 = Action(1)*w_scale;
-w4 = Action(1)*w_scale;
+w2 = Action(2)*w_scale;
+w3 = Action(3)*w_scale;
+w4 = Action(4)*w_scale;
 
 % w2 = Action(2)*w_scale;
 % w3 = Action(3)*w_scale;
@@ -44,7 +44,7 @@ w2 = max(min(w2,max_w),0);
 w3 = max(min(w3,max_w),0);
 w4 = max(min(w4,max_w),0);
 
-disp([w1 w2 w3 w4])
+% disp([w1 w2 w3 w4])
 % Calculate thrusts and torques
 u1=b*((w1^2)+(w2^2)+(w3^2)+(w4^2));
 u2=b*l*((w3^2)-(w1^2));

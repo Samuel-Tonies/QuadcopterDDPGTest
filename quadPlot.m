@@ -19,9 +19,9 @@ psi = squeeze(plant_states(11,1,:));
 psid = squeeze(plant_states(12,1,:));
 
 w1 = squeeze(action_signal(1,1,:));
-w2 = squeeze(action_signal(1,1,:));
-w3 = squeeze(action_signal(1,1,:));
-w4 = squeeze(action_signal(1,1,:));
+w2 = squeeze(action_signal(2,1,:));
+w3 = squeeze(action_signal(3,1,:));
+w4 = squeeze(action_signal(4,1,:));
 
 figure
 plot(t, x)

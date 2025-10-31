@@ -33,11 +33,11 @@ zdd = State_dd(3); % Attempting to reduce large changes in thrust
 
 % Episodes are terminated if excessively large states are reached
 IsDone = any([abs(next_z) abs(next_x) abs(next_y)] > 10)...
-    || any([abs(next_phi) abs(next_theta) abs(next_psi)] > pi*2);
+    || any([abs(next_phi) abs(next_theta) abs(next_psi)] > pi/2);
 
  % Currently set as simple reward function  for testing
     % Reward = -0.00001*(next_phid^2 + next_thetad^2 + next_psid^2) - 0.1*(next_zd^2) + 500;
-    Reward = -(next_zd^2) + -0.1*(zdd^2);
+    Reward = -(next_zd^2) + -10*(next_phid)^2 + -10*(next_thetad)^2 + -10*(next_psid)^2;
     % Small positive reward is given at each time step to avoid getting
     % stuck in local maxima where agent tries to crash as soon as possible
     % to terminate episode early and avoid accumulating more negative
