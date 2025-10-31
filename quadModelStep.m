@@ -8,7 +8,7 @@ m=0.65;
 ix=7.5e-3;
 iy=7.5e-3;
 iz=1.3e-2;
-Ts = 0.1; % note that Ts should be same as Ts in runQuadcopterDDPG
+Ts = 0.01; % note that Ts should be same as Ts in runQuadcopterDDPG
 
 % Unpack State
 x = State(1);
@@ -34,13 +34,17 @@ w2 = Action(2)*w_scale;
 w3 = Action(3)*w_scale;
 w4 = Action(4)*w_scale;
 
+% w2 = Action(2)*w_scale;
+% w3 = Action(3)*w_scale;
+% w4 = Action(4)*w_scale;
+
 % Ensure input bounded
 w1 = max(min(w1,max_w),0);
 w2 = max(min(w2,max_w),0);
 w3 = max(min(w3,max_w),0);
 w4 = max(min(w4,max_w),0);
 
-disp([w1 w2 w3 w4])
+% disp([w1 w2 w3 w4])
 % Calculate thrusts and torques
 u1=b*((w1^2)+(w2^2)+(w3^2)+(w4^2));
 u2=b*l*((w3^2)-(w1^2));
@@ -73,6 +77,7 @@ new_phi =(new_phid*Ts)+phi;
 new_theta =(new_thetad*Ts)+theta;
 new_psi =(new_psid*Ts)+psi;
 
+State_dd = [xdd,ydd,zdd,phidd,thetadd,psidd];
 % Concatenate states
 NextState = [new_x; new_xd; new_y; new_yd; new_z; new_zd; new_phi; new_phid; new_theta; new_thetad; new_psi; new_psid];
 
@@ -80,6 +85,6 @@ NextState = [new_x; new_xd; new_y; new_yd; new_z; new_zd; new_phi; new_phid; new
 NextObs = NextState;
 
 % Reward calculation
-[Reward, IsDone] = rewardCalc(NextState, State, Action);
+[Reward, IsDone] = rewardCalc(NextState, State, State_dd, Action);
 
 end

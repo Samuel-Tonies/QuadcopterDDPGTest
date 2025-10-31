@@ -1,4 +1,4 @@
-function [Reward, IsDone] = rewardCalc(NextState,State,Action)
+function [Reward, IsDone] = rewardCalc(NextState,State, State_dd, Action)
 % Calculate Reward function
 
 % Unpack State(t-1)
@@ -29,21 +29,24 @@ next_thetad = NextState(10);
 next_psi = NextState(11);
 next_psid = NextState(12);
 
-% Episodes are terminated if excessively large states are reached
-IsDone = any([abs(next_z) abs(next_x) abs(next_y)] > 1000)...
-    || any([abs(next_phi) abs(next_theta) abs(next_psi)] > pi);
+zdd = State_dd(3); % Attempting to reduce large changes in thrust
 
-if ~IsDone
-    % Currently set as simple reward function  for testing
-    Reward = -0.0001*(next_phid^2 + next_thetad^2 + next_psid^2) - 0.01*(next_zd^2) + 100;
+% Episodes are terminated if excessively large states are reached
+IsDone = any([abs(next_z) abs(next_x) abs(next_y)] > 10)...
+    || any([abs(next_phi) abs(next_theta) abs(next_psi)] > pi/2);
+
+ % Currently set as simple reward function  for testing
+    % Reward = -0.00001*(next_phid^2 + next_thetad^2 + next_psid^2) - 0.1*(next_zd^2) + 500;
+    Reward = -(next_zd^2) + -10*(next_phid)^2 + -10*(next_thetad)^2 + -10*(next_psid)^2;
     % Small positive reward is given at each time step to avoid getting
     % stuck in local maxima where agent tries to crash as soon as possible
     % to terminate episode early and avoid accumulating more negative
     % rewards
-else
-    Reward = -2*10^2; 
-    % When IsDone is true, a large negative reward is given for "crashing"
-end
+   
+% if IsDone
+%     Reward = Reward - 10; 
+%     % When IsDone is true, a large negative reward is given for "crashing"
+% end
 
 % Check for Inf/NaN rewards due to massive state values
 if ~isfinite(Reward)
