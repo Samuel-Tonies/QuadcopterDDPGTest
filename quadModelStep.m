@@ -77,6 +77,7 @@ new_phi =(new_phid*Ts)+phi;
 new_theta =(new_thetad*Ts)+theta;
 new_psi =(new_psid*Ts)+psi;
 
+State_dd = [xdd,ydd,zdd,phidd,thetadd,psidd];
 % Concatenate states
 NextState = [new_x; new_xd; new_y; new_yd; new_z; new_zd; new_phi; new_phid; new_theta; new_thetad; new_psi; new_psid];
 
@@ -84,6 +85,6 @@ NextState = [new_x; new_xd; new_y; new_yd; new_z; new_zd; new_phi; new_phid; new
 NextObs = NextState;
 
 % Reward calculation
-[Reward, IsDone] = rewardCalc(NextState, State, Action);
+[Reward, IsDone] = rewardCalc(NextState, State, State_dd, Action);
 
 end
